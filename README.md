@@ -46,8 +46,8 @@ Create a Blank Experiment and copy the Experiment ID to  [config.py](utils/confi
 
 ## Update your git provider e-mail in the code
 
-Update the ***repo_path*** & ***unittest_notebook_path*** with your git provider username in [deploy.py](deploy/deploy.py)
-Update the ***git_url*** with the url to your Azure DevOps repo in [deploy.py](deploy/deploy.py).
+Update the ***repo_path*** & ***unittest_notebook_path*** with your git provider username in [deploy.py](deploy/deploy.py) to connect to your Repos API.
+Update the ***git_url*** with the url to your Azure DevOps repo in [deploy.py](deploy/deploy.py) to sync Repos API.
 
 #### Set up The Build Pipeline
 
