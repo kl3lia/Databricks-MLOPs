@@ -1,0 +1,45 @@
+name: Test pipeline
+
+on:
+  push:
+    branches:
+      - '**'
+    tags-ignore:
+      - 'v*' # this tag type is used for release pipelines
+
+jobs:
+  test-pipeline:
+
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+
+    env:
+      DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST2 }}
+      DATABRICKS_TOKEN:  ${{ secrets.DATABRICKS_TOKEN2 }}
+
+    steps:
+      - uses: actions/checkout@v1
+      
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.7.5
+
+      - name: Install pip
+        run: |
+          python -m pip install --upgrade pip
+          pip install databricks_cli
+
+      - name: Deploy integration test
+        run: |
+          python deploy/deploy.py  --branch_name ${{ steps.extract_branch.outputs.branch }} --pr_branch   
+
+
+
+
